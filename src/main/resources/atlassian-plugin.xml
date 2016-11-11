@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+    <param name="plugin-icon">images/pluginIcon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+  </plugin-info>
+  <!-- add our i18n resource -->
+  <resource type="i18n" name="i18n" location="tutorial-jira-simple-issue-crud-rob"/>
+  <!-- add our web resources -->
+  <web-resource key="tutorial-jira-simple-issue-crud-rob-resources" name="tutorial-jira-simple-issue-crud-rob Web Resources">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <resource type="download" name="tutorial-jira-simple-issue-crud-rob.css" location="/css/tutorial-jira-simple-issue-crud-rob.css"/>
+    <resource type="download" name="tutorial-jira-simple-issue-crud-rob.js" location="/js/tutorial-jira-simple-issue-crud-rob.js"/>
+    <resource type="download" name="images/" location="/images"/>
+    <context>tutorial-jira-simple-issue-crud-rob</context>
+  </web-resource>
+  <servlet name="Complainer" i18n-name-key="complain.name" key="complain" class="com.example.plugins.rob.tutorial.servlet.IssueCRUD">
+    <description key="complain.description">The Complaint Plugin</description>
+    <url-pattern>/complainer</url-pattern>
+  </servlet>
+  <component-import key="templateRenderer" interface="com.atlassian.templaterenderer.TemplateRenderer" filter=""/>
+  <component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager" filter=""/>
+  <web-item name="myItem" i18n-name-key="my-item.name" key="my-item" section="system.top.navigation.bar" weight="1000">
+    <description key="my-item.description">The Complaints Plugin</description>
+    <label>Complaints</label>
+    <link linkId="complain-link">deleteMe</link>
+  </web-item>
+  <web-section name="manageSection" i18n-name-key="manage-section.name" key="manage-section" location="complain-link" weight="1000">
+    <description key="manage-section.description">The Complaints Plugin</description>
+    <label>Manage</label>
+  </web-section>
+  <web-item name="Inbox" i18n-name-key="inbox.name" key="inbox" section="complain-link/manage-section" weight="1000">
+    <description key="inbox.description">The Complaints Plugin</description>
+    <label>Inbox</label>
+    <link linkId="inbox-link">/plugins/servlet/complainer</link>
+  </web-item>
+  <web-section name="createSection" i18n-name-key="create-section.name" key="create-section" location="complain-link" weight="1000">
+    <description key="create-section.description">The createSection Plugin</description>
+    <label>Create</label>
+  </web-section>
+  <web-item name="newComplaint" i18n-name-key="new-complaint.name" key="new-complaint" section="complain-link/create-section" weight="1000">
+    <description key="new-complaint.description">The newComplaint Plugin</description>
+    <label>New Complaint</label>
+    <link linkId="new-complaint-link">/plugins/servlet/complainer?new=y</link>
+  </web-item>
+</atlassian-plugin>
